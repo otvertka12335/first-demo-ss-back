@@ -46,6 +46,18 @@ class UserService {
         }
     }
 
+    static async getAUserByEmail(email) {
+        try {
+            const theUser = await database.User.findOne({
+                where: { username: email }
+            });
+
+            return theUser;
+        } catch (error) {
+            throw error;
+        }
+    }
+
     static async delete(id) {
         try {
             const userToDelete = await database.User.findOne({ where: { id: Number(id) } });

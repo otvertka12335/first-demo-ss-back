@@ -6,7 +6,10 @@ class ProjectService {
             return await database.Project.findAll({
                 include: [{
                     all: true
-                }]
+                }],
+                order:[
+                    ['id', 'DESC']
+                ]
             });
         } catch (e) {
             throw e;
@@ -47,6 +50,21 @@ class ProjectService {
         try {
             const theProject = await database.Project.findOne({
                 where: {id: Number(id)},
+                include: [{
+                    all: true
+                }]
+            });
+
+            return theProject;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    static async getAProjectByUser(id) {
+        try {
+            const theProject = await database.Project.findAll({
+                where: {userId: Number(id)},
                 include: [{
                     all: true
                 }]

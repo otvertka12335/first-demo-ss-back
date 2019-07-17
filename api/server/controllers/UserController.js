@@ -79,6 +79,24 @@ class UserController {
         }
     }
 
+    static async getAUserByEmail(req, res) {
+        const {email} = req.params;
+
+        try {
+            const theUser = await UserService.getAUserByEmail(email);
+
+            if (!theUser) {
+                util.setError(404, `Cannot find user with the email ${email}`);
+            } else {
+                util.setSuccess(200, 'Found User', theUser);
+            }
+            return util.send(res);
+        } catch (error) {
+            util.setError(404, error);
+            return util.send(res);
+        }
+    }
+
     static async deleteUser(req, res) {
         const {id} = req.params;
 
