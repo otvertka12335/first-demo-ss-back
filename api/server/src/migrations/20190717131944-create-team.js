@@ -35,6 +35,23 @@ module.exports = {
                 allowNull: false,
                 type: Sequelize.DATE
             }
+        }).then(() => {
+            return queryInterface.bulkInsert('Teams', [
+                {
+                    project: 1,
+                    user: 2,
+                    role: 'maintainer',
+                    createdAt: new Date(),
+                    updatedAt: new Date(),
+                },
+                {
+                    project: 1,
+                    user: 3,
+                    role: 'developer',
+                    createdAt: new Date(),
+                    updatedAt: new Date(),
+                }
+            ])
         });
     },
     down: (queryInterface, Sequelize) => {
