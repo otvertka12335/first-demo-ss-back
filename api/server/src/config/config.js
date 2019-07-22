@@ -9,6 +9,7 @@ module.exports = {
     // },
 
     development: {
+        // DB NAME HERE
         database: 'sequelize',
         username: 'postgres',
         password: 'postgres',

@@ -32,10 +32,7 @@ class ProjectService {
 
             if (projectToUpdate) {
                 await database.Project.update(updateProject, {
-                    where: {id: Number(id)},
-                    include: [{
-                        all: true
-                    }]
+                    where: {id: Number(id)}
                 });
 
                 return updateProject;
