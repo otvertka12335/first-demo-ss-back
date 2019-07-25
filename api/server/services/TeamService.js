@@ -7,7 +7,7 @@ class TeamService {
                 include: [{
                     all: true
                 }],
-                order:[
+                order: [
                     ['id', 'DESC']
                 ]
             });
@@ -87,6 +87,39 @@ class TeamService {
                 return deletedTeam;
             }
             return null;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    static async addTeamMates(id, maintainers, developers) {
+        try {
+            const deleteProject = database.Team.destroy({
+                where: {project: Number(id)}
+            });
+            if (deleteProject) {
+                var arrays = [];
+
+                for (let item of maintainers) {
+                    let newPromise = database.Team.create({
+                        'project': id,
+                        'user': item,
+                        'role': 'maintainer'
+                    });
+                    arrays.push(newPromise);
+                }
+
+                for (let item of developers) {
+                    let newPromise = database.Team.create({
+                        'project': id,
+                        'user': item,
+                        'role': 'developer'
+                    });
+                    arrays.push(newPromise);
+                }
+
+                return Promise.all(arrays).then();
+            }
         } catch (error) {
             throw error;
         }

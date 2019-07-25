@@ -10,4 +10,6 @@ router.get('/project/:id', TeamController.getATeamByProject);
 router.put('/:id', TeamController.updatedTeam);
 router.delete('/:id', TeamController.deleteTeam);
 
+router.post('/addTeamMates', TeamController.addTemToProject);
+
 export default router;

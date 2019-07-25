@@ -124,6 +124,25 @@ class TeamController {
             return util.send(res);
         }
     }
+
+    static async addTemToProject(req, res) {
+        const {project, developers, maintainers} = req.body;
+
+        if(!Number(project)) {
+            util.setError(400, 'Please provide a numeric value for project');
+            return util.send(res);
+        }
+
+        try {
+            // Call service function with two params | mai, dev
+            const result = await TeamService.addTeamMates(project, maintainers, developers);
+            util.setSuccess(200, `Team Mates added to Team for Project ${project}`, result);
+            return util.send(res);
+        } catch (error) {
+            util.setError(400, error);
+            return util.send(res);
+        }
+    }
 }
 
 export default TeamController;
