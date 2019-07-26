@@ -106,6 +106,13 @@ class TeamService {
                         'user': item,
                         'role': 'maintainer'
                     });
+
+                    // let newPromise = database.Team.findOne({
+                    //     where: created,
+                    //     include: [{
+                    //         all: true
+                    //     }]
+                    // });
                     arrays.push(newPromise);
                 }
 
@@ -113,12 +120,20 @@ class TeamService {
                     let newPromise = database.Team.create({
                         'project': id,
                         'user': item,
-                        'role': 'developer'
+                        'role': 'developer',
+
                     });
+
+                    // let newPromise = database.Team.findOne({
+                    //     where: created,
+                    //     include: [{
+                    //         all: true
+                    //     }]
+                    // });
                     arrays.push(newPromise);
                 }
 
-                return Promise.all(arrays).then();
+                return Promise.all(arrays)
             }
         } catch (error) {
             throw error;
