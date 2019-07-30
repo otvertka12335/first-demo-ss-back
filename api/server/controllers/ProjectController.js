@@ -58,6 +58,7 @@ class ProjectController {
 
     static async getAProject(req, res) {
         const {id} = req.params;
+        const {userId} = req.body;
 
         if (!Number(id)) {
             util.setError(400, 'Please input a valid numeric value');

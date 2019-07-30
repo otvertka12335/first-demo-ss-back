@@ -20,6 +20,8 @@ app.use(function (req, res, next) {
 
 const port = process.env.PORT || 8000;
 
+
+//Router Usages
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/projects', projectRoutes);
 app.use('/api/v1/teams', teamRoutes);

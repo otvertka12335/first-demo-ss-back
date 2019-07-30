@@ -1,5 +1,6 @@
 import TeamService from '../services/TeamService';
 import Util from '../utils/Utils';
+import ProjectService from "../services/ProjectService";
 
 const util = new Util();
 
@@ -39,7 +40,7 @@ class TeamController {
         const alteredTeam = req.body;
         const {id} = req.params;
         if (!Number(id)) {
-            util.setError(400, 'Please input a valid numeric value');
+            util.setError(400, 'Please input a valid numeric value for update');
             return util.send(res);
         }
         try {
@@ -60,7 +61,7 @@ class TeamController {
         const {id} = req.params;
 
         if (!Number(id)) {
-            util.setError(400, 'Please input a valid numeric value');
+            util.setError(400, 'Please input a valid numeric value for get a Team');
             return util.send(res);
         }
 
@@ -140,6 +141,29 @@ class TeamController {
             return util.send(res);
         } catch (error) {
             util.setError(400, error);
+            return util.send(res);
+        }
+    }
+
+    static async getAProjectWhereUserExist(req, res) {
+        const {id} = req.body;
+
+        if (!Number(id)) {
+            util.setError(400, 'SPlease input a valid numeric value XT');
+            return util.send(res);
+        }
+
+        try {
+            const theProject = await TeamService.getAProjectWhereUserExist(id);
+
+            if (!theProject) {
+                util.setError(404, `Cannot find projects with the user id ${id}`);
+            } else {
+                util.setSuccess(200, 'Found Project', theProject);
+            }
+            return util.send(res);
+        } catch (error) {
+            util.setError(404, error);
             return util.send(res);
         }
     }

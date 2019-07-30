@@ -98,7 +98,7 @@ class TeamService {
                 where: {project: Number(id)}
             });
             if (deleteProject) {
-                var arrays = [];
+                let arrays = [];
 
                 for (let item of maintainers) {
                     let newPromise = database.Team.create({
@@ -106,13 +106,6 @@ class TeamService {
                         'user': item,
                         'role': 'maintainer'
                     });
-
-                    // let newPromise = database.Team.findOne({
-                    //     where: created,
-                    //     include: [{
-                    //         all: true
-                    //     }]
-                    // });
                     arrays.push(newPromise);
                 }
 
@@ -123,13 +116,6 @@ class TeamService {
                         'role': 'developer',
 
                     });
-
-                    // let newPromise = database.Team.findOne({
-                    //     where: created,
-                    //     include: [{
-                    //         all: true
-                    //     }]
-                    // });
                     arrays.push(newPromise);
                 }
 
@@ -137,6 +123,21 @@ class TeamService {
             }
         } catch (error) {
             throw error;
+        }
+    }
+
+    static async getAProjectWhereUserExist(userId) {
+        try {
+            const theProjects = await database.Team.findAll({
+                where: {user: Number(userId)},
+                include: [{
+                    all: true
+                }]
+            });
+
+            return theProjects
+        } catch (error) {
+            throw  error;
         }
     }
 }

@@ -11,5 +11,7 @@ router.put('/:id', TeamController.updatedTeam);
 router.delete('/:id', TeamController.deleteTeam);
 
 router.post('/addTeamMates', TeamController.addTemToProject);
+router.get('/connecting/projects', TeamController.getAProjectWhereUserExist);
+
 
 export default router;

@@ -7,7 +7,7 @@ class ProjectService {
                 include: [{
                     all: true
                 }],
-                order:[
+                order: [
                     ['id', 'DESC']
                 ]
             });
@@ -62,6 +62,9 @@ class ProjectService {
         try {
             const theProject = await database.Project.findAll({
                 where: {userId: Number(id)},
+                order: [
+                    ['id', 'DESC'],
+                ],
                 include: [{
                     all: true
                 }]
@@ -78,8 +81,13 @@ class ProjectService {
             const projectToDelete = await database.Project.findOne({where: {id: Number(id)}});
 
             if (projectToDelete) {
+                const teamsToDelete = await database.Team.destroy({
+                    where: {project: id}
+                });
+
                 const deletedProject = await database.Project.destroy({
-                    where: {id: Number(id)}
+                    where: {id: Number(id)},
+                    cascade: true
                 });
                 return deletedProject;
             }
