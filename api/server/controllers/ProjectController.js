@@ -58,10 +58,9 @@ class ProjectController {
 
     static async getAProject(req, res) {
         const {id} = req.params;
-        const {userId} = req.body;
 
         if (!Number(id)) {
-            util.setError(400, 'Please input a valid numeric value');
+            util.setError(400, 'Please input a valid numeric value1');
             return util.send(res);
         }
 
@@ -122,6 +121,24 @@ class ProjectController {
             return util.send(res);
         } catch (error) {
             util.setError(400, error);
+            return util.send(res);
+        }
+    }
+
+    static async searchFunction(req, res) {
+        const {id, searchString} = req.params;
+
+        try {
+            const theProject = await ProjectService.searchProjectByName(searchString, id);
+
+            if (!theProject) {
+                util.setError(404, `Cannot find projects with name ${searchString}`);
+            } else {
+                util.setSuccess(200, 'Found Project', theProject);
+            }
+            return util.send(res);
+        } catch (error) {
+            util.setError(404, error);
             return util.send(res);
         }
     }

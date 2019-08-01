@@ -1,4 +1,7 @@
 import database from '../src/models'
+import Sequelize from 'sequelize'
+
+const Op = Sequelize.Op;
 
 class ProjectService {
     static async getAll() {
@@ -61,10 +64,14 @@ class ProjectService {
     static async getAProjectByUser(id) {
         try {
             const theProject = await database.Project.findAll({
-                where: {userId: Number(id)},
+                where: {
+                    userId: Number(id),
+                },
                 order: [
                     ['id', 'DESC'],
                 ],
+                // limit: 10,
+                // offset: 2,
                 include: [{
                     all: true
                 }]
@@ -92,6 +99,29 @@ class ProjectService {
                 return deletedProject;
             }
             return null;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    static async searchProjectByName(searchString, id) {
+        try {
+            const theProject = await database.Project.findAll({
+                where: {
+                    name: {
+                        [Op.like]: `%${searchString}%`
+                    },
+                    userId: id
+                },
+                order: [
+                    ['id', 'DESC'],
+                ],
+                include: [{
+                    all: true
+                }]
+            });
+
+            return theProject;
         } catch (error) {
             throw error;
         }

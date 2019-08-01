@@ -146,7 +146,7 @@ class TeamController {
     }
 
     static async getAProjectWhereUserExist(req, res) {
-        const {id} = req.body;
+        const {id} = req.params;
 
         if (!Number(id)) {
             util.setError(400, 'SPlease input a valid numeric value XT');

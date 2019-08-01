@@ -27,7 +27,7 @@ class UserController {
         const newUser = req.body;
         try {
             const createdUser = await UserService.add(newUser);
-            util.setSuccess(201, 'User Added!', createdUser);
+            util.setSuccess(201, 'You are successfully registered', createdUser);
             return util.send(res);
         } catch (error) {
             util.setError(400, error.message);
