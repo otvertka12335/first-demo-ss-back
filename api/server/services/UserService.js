@@ -1,9 +1,27 @@
 import database from '../src/models'
+import Sequelize from 'sequelize'
+
+const Op = Sequelize.Op;
+
 
 class UserService {
     static async getAll() {
         try {
             return await database.User.findAll();
+        } catch (e) {
+            throw e;
+        }
+    }
+
+    static async getAllWithout(id) {
+        try {
+            return await database.User.findAll({
+                where: {
+                    id: {
+                        [Op.not]: id
+                    }
+                }
+            });
         } catch (e) {
             throw e;
         }

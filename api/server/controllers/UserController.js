@@ -19,6 +19,23 @@ class UserController {
         }
     }
 
+    static async getAllUsersWithout(req, res) {
+        const {id} = req.params;
+
+        try {
+            const users = await UserService.getAllWithout(id);
+            if (users.length > 0) {
+                util.setSuccess(200, 'Users', users);
+            } else {
+                util.setSuccess(200, 'Users not founded');
+            }
+            return util.send(res);
+        } catch (e) {
+            util.setError(400, e);
+            return util.send(res);
+        }
+    }
+
     static async addUser(req, res) {
         if (!req.body.username || !req.body.name) {
             util.setError(400, 'Please provide complete details');
