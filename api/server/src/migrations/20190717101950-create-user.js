@@ -9,10 +9,19 @@ module.exports = {
                 type: Sequelize.INTEGER
             },
             username: {
+                unique: true,
+                allowNull: false,
                 type: Sequelize.STRING
             },
             name: {
                 type: Sequelize.STRING
+            },
+            password: {
+                type: Sequelize.STRING
+            },
+            accepted: {
+                type: Sequelize.BOOLEAN,
+                defaultValue: false
             },
             createdAt: {
                 allowNull: false,
@@ -27,18 +36,21 @@ module.exports = {
                 {
                     username: 'vkravchik@gmail.com',
                     name: 'Vadym',
+                    password: 'vkravchik',
                     createdAt: new Date(),
                     updatedAt: new Date(),
                 },
                 {
                     username: 'vadim@cloud-mail.net',
                     name: 'Vadym',
+                    password: 'vkravchik',
                     createdAt: new Date(),
                     updatedAt: new Date(),
                 },
                 {
                     username: 'haku@cloud-mail.net',
                     name: 'Haku',
+                    password: 'vkravchik',
                     createdAt: new Date(),
                     updatedAt: new Date(),
                 }

@@ -1,6 +1,6 @@
 import TeamService from '../services/TeamService';
 import Util from '../utils/Utils';
-import ProjectService from "../services/ProjectService";
+
 
 const util = new Util();
 
@@ -129,7 +129,7 @@ class TeamController {
     static async addTemToProject(req, res) {
         const {project, developers, maintainers} = req.body;
 
-        if(!Number(project)) {
+        if (!Number(project)) {
             util.setError(400, 'Please provide a numeric value for project');
             return util.send(res);
         }
@@ -138,6 +138,9 @@ class TeamController {
             // Call service function with two params | mai, dev
             const result = await TeamService.addTeamMates(project, maintainers, developers);
             util.setSuccess(200, `Team Mates added to Team for Project ${project}`, result);
+
+            // TeamService.sendToken(project, developers, maintainers);
+
             return util.send(res);
         } catch (error) {
             util.setError(400, error);
@@ -149,7 +152,7 @@ class TeamController {
         const {id} = req.params;
 
         if (!Number(id)) {
-            util.setError(400, 'SPlease input a valid numeric value XT');
+            util.setError(400, 'Please input a valid numeric value');
             return util.send(res);
         }
 
@@ -157,7 +160,7 @@ class TeamController {
             const theProject = await TeamService.getAProjectWhereUserExist(id);
 
             if (!theProject) {
-                util.setError(404, `Cannot find projects with the user id ${id}`);
+                util.setError(204, `Cannot find projects with the user id ${id}`);
             } else {
                 util.setSuccess(200, 'Found Project', theProject);
             }
@@ -166,6 +169,35 @@ class TeamController {
             util.setError(404, error);
             return util.send(res);
         }
+    }
+
+    static async sendToken(req, res) {
+        try {
+            let result = await TeamService.sendToken();
+
+            if (result) {
+                // acceptedTeamCache.set(result.messageId, 'dfgdfgdfgdfgdfg');
+                util.setSuccess(200, 'Found Project', result);
+            } else {
+                util.setError(404, 'Cant Send email');
+            }
+            return util.send(res);
+        } catch (error) {
+            util.setError(404, error);
+            return util.send(res);
+        }
+    }
+
+    static async acceptInvite(req, res) {
+        const {key, token} = req.params;
+
+        const result = await TeamService.acceptInviteToProject(key, token);
+        if (result) {
+            util.setSuccess(200, 'Accepted', result);
+        } else {
+            util.setError(404, `Accepting error`);
+        }
+        return util.send(res);
     }
 }
 

@@ -1,4 +1,13 @@
 import database from '../src/models'
+import nodeMailer from 'nodemailer'
+import Sequelize from 'sequelize'
+import jwt from 'jsonwebtoken'
+import NodeCache from 'node-cache'
+
+const acceptedTeamCache = new NodeCache();
+
+const Op = Sequelize.Op;
+
 
 class TeamService {
     static async getAll() {
@@ -140,6 +149,93 @@ class TeamService {
             throw  error;
         }
     }
+
+    static async sendToken(project, developers, maintainers) {
+
+        let transporter = nodeMailer.createTransport({
+            // host: "smtp.mailtrap.io",
+            // port: 2525,
+            // auth: {
+            //     user: "049997c52a02de",
+            //     pass: "f8b9e4bab39c41"
+            // }
+            service: 'gmail',
+            auth: {
+                user: 'vkravchik@gmail.com',
+                pass: 'mlkxrhobrksbczpj'
+            }
+        });
+
+
+        let userArray = developers.concat(maintainers);
+        let users = await database.User.findAll({
+            where: {
+                id: {
+                    [Op.in]: userArray
+                },
+            },
+            attributes: ['id', 'username']
+        });
+
+        let tmp = [];
+        for (let i of users) {
+            tmp.push(i.username);
+            let key = `${project}$${i.id}`;
+            let token = jwt.sign({
+                projectId: project,
+                userId: i.id
+            }, 'jwt', {
+                expiresIn: '1h'
+            });
+
+            let src = `http://localhost:8000/api/v1/teams/accept/mail/${key}/${token}`;
+            let mailOptions = {
+                from: 'administration@haku.com',
+                to: i.username,
+                subject: 'Connecting to Team ✔',
+                text: 'You connected to team',
+                html: `<h1><a href="${src}">Accept link</a></h1>`
+            };
+            const res = await transporter.sendMail(mailOptions);
+            acceptedTeamCache.set(key, token)
+        }
+        // console.log(res);
+        // return res;
+        return true
+    }
+
+    static async acceptInviteToProject(key, token) {
+        let parsedKey = key.split('$');
+
+        let projectId = parsedKey[0];
+        let userId = parsedKey[1];
+        let decodedToken = jwt.decode(token, 'jwt');
+
+        if (projectId == decodedToken.projectId && userId == decodedToken.userId) {
+            console.log('User verified');
+            // try {
+            //     const result = await database.Team.update({
+            //         accepted: true
+            //     }, {
+            //         where: {
+            //             project: projectId,
+            //             user: userId
+            //         },
+            //         include: [{
+            //             all: true
+            //         }]
+            //     });
+            //     return result;
+            // } catch (error) {
+            //     throw error;
+            // }
+
+        } else {
+            console.log('Error');
+        }
+    }
+
+
 }
 
 export default TeamService;

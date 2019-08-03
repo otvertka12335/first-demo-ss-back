@@ -10,7 +10,7 @@ module.exports = {
 
     development: {
         // DB NAME HERE
-        database: 'sequelize',
+        database: 'kravchik',
         username: 'postgres',
         password: 'postgres',
         host: '127.0.0.1',
@@ -18,7 +18,7 @@ module.exports = {
     },
 
     test: {
-        database: 'sequelize_test',
+        database: 'kravchik',
         username: 'postgres',
         password: 'postgres',
         host: '127.0.0.1',

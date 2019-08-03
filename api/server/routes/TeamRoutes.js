@@ -14,6 +14,9 @@ router.post('/addTeamMates', TeamController.addTemToProject);
 router.put('/:id', TeamController.updatedTeam);
 router.delete('/:id', TeamController.deleteTeam);
 
+// router.get('/send/mail/', TeamController.sendToken);
+// router.get('/accept/mail/:key/:token', TeamController.acceptInvite);
+
 
 
 export default router;
