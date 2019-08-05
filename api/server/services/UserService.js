@@ -8,7 +8,7 @@ import passwordHash from 'password-hash'
 const userProfileCache = new NodeCache();
 const Op = Sequelize.Op;
 
-const messages = require('../src/seeders/messages.env');
+const messages = require('../../messages.env');
 
 
 class UserService {

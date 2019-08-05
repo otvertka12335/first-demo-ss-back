@@ -3,6 +3,7 @@ import Util from '../utils/Utils';
 
 
 const util = new Util();
+const messages = require('../../messages.env');
 
 class TeamController {
     static async getAllTeams(req, res) {
@@ -11,7 +12,7 @@ class TeamController {
             if (teams.length > 0) {
                 util.setSuccess(200, 'Teams', teams);
             } else {
-                util.setSuccess(200, 'Teams not founded');
+                util.setSuccess(204, messages.GENERAL.EMPTY_RESULT);
             }
             return util.send(res);
         } catch (e) {
@@ -22,7 +23,7 @@ class TeamController {
 
     static async addTeam(req, res) {
         if (!req.body.project || !req.body.user) {
-            util.setError(400, 'Please provide complete details');
+            util.setError(400, messages.GENERAL.PROVIDE_COMPLETE_DETAILS);
             return util.send(res);
         }
         const newTeam = req.body;
@@ -40,13 +41,13 @@ class TeamController {
         const alteredTeam = req.body;
         const {id} = req.params;
         if (!Number(id)) {
-            util.setError(400, 'Please input a valid numeric value for update');
+            util.setError(400, messages.GENERAL.PROVIDE_COMPLETE_DETAILS);
             return util.send(res);
         }
         try {
             const updateTeam = await TeamService.update(id, alteredTeam);
             if (!updateTeam) {
-                util.setError(404, `Cannot find user with the id: ${id}`);
+                util.setError(204, messages.GENERAL.EMPTY_RESULT);
             } else {
                 util.setSuccess(200, 'Team updated', updateTeam);
             }
@@ -61,7 +62,7 @@ class TeamController {
         const {id} = req.params;
 
         if (!Number(id)) {
-            util.setError(400, 'Please input a valid numeric value for get a Team');
+            util.setError(400, messages.GENERAL.VALID_NUMERIC_VALUE);
             return util.send(res);
         }
 
@@ -69,7 +70,7 @@ class TeamController {
             const theTeam = await TeamService.getA(id);
 
             if (!theTeam) {
-                util.setError(404, `Cannot find user with the id ${id}`);
+                util.setError(204, messages.GENERAL.EMPTY_RESULT);
             } else {
                 util.setSuccess(200, 'Found Team', theTeam);
             }
@@ -84,7 +85,7 @@ class TeamController {
         const {id} = req.params;
 
         if (!Number(id)) {
-            util.setError(400, 'Please input a valid numeric value');
+            util.setError(400, messages.GENERAL.VALID_NUMERIC_VALUE);
             return util.send(res);
         }
 
@@ -92,7 +93,7 @@ class TeamController {
             const theTeam = await TeamService.getATeamByProject(id);
 
             if (!theTeam) {
-                util.setError(404, `Cannot find teams with the user id ${id}`);
+                util.setError(204, messages.GENERAL.EMPTY_RESULT);
             } else {
                 util.setSuccess(200, 'Found Team', theTeam);
             }
@@ -107,7 +108,7 @@ class TeamController {
         const {id} = req.params;
 
         if (!Number(id)) {
-            util.setError(400, 'Please provide a numeric value');
+            util.setError(400, messages.GENERAL.VALID_NUMERIC_VALUE);
             return util.send(res);
         }
 
@@ -117,7 +118,7 @@ class TeamController {
             if (teamToDelete) {
                 util.setSuccess(200, 'Team deleted');
             } else {
-                util.setError(404, `Team with the id ${id} cannot be found`);
+                util.setError(204, messages.GENERAL.EMPTY_RESULT);
             }
             return util.send(res);
         } catch (error) {
@@ -130,7 +131,7 @@ class TeamController {
         const {project, developers, maintainers} = req.body;
 
         if (!Number(project)) {
-            util.setError(400, 'Please provide a numeric value for project');
+            util.setError(400, messages.GENERAL.VALID_NUMERIC_VALUE);
             return util.send(res);
         }
 
@@ -152,7 +153,7 @@ class TeamController {
         const {id} = req.params;
 
         if (!Number(id)) {
-            util.setError(400, 'Please input a valid numeric value');
+            util.setError(400, messages.GENERAL.VALID_NUMERIC_VALUE);
             return util.send(res);
         }
 
@@ -171,34 +172,33 @@ class TeamController {
         }
     }
 
-    static async sendToken(req, res) {
-        try {
-            let result = await TeamService.sendToken();
+    // static async sendToken(req, res) {
+    //     try {
+    //         let result = await TeamService.sendToken();
+    //
+    //         if (result) {
+    //             util.setSuccess(200, 'Found Project', result);
+    //         } else {
+    //             util.setError(404, 'Cant Send email');
+    //         }
+    //         return util.send(res);
+    //     } catch (error) {
+    //         util.setError(404, error);
+    //         return util.send(res);
+    //     }
+    // }
 
-            if (result) {
-                // acceptedTeamCache.set(result.messageId, 'dfgdfgdfgdfgdfg');
-                util.setSuccess(200, 'Found Project', result);
-            } else {
-                util.setError(404, 'Cant Send email');
-            }
-            return util.send(res);
-        } catch (error) {
-            util.setError(404, error);
-            return util.send(res);
-        }
-    }
-
-    static async acceptInvite(req, res) {
-        const {key, token} = req.params;
-
-        const result = await TeamService.acceptInviteToProject(key, token);
-        if (result) {
-            util.setSuccess(200, 'Accepted', result);
-        } else {
-            util.setError(404, `Accepting error`);
-        }
-        return util.send(res);
-    }
+    // static async acceptInvite(req, res) {
+    //     const {key, token} = req.params;
+    //
+    //     const result = await TeamService.acceptInviteToProject(key, token);
+    //     if (result) {
+    //         util.setSuccess(200, 'Accepted', result);
+    //     } else {
+    //         util.setError(404, `Accepting error`);
+    //     }
+    //     return util.send(res);
+    // }
 }
 
 export default TeamController;

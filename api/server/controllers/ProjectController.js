@@ -2,6 +2,7 @@ import ProjectService from '../services/ProjectService';
 import Util from '../utils/Utils';
 
 const util = new Util();
+const messages = require('../../messages.env');
 
 class ProjectController {
     static async getAllProjects(req, res) {
@@ -10,7 +11,7 @@ class ProjectController {
             if (projects.length > 0) {
                 util.setSuccess(200, 'Projects', projects);
             } else {
-                util.setSuccess(200, 'Projects not founded');
+                util.setSuccess(204, messages.GENERAL.EMPTY_RESULT);
             }
             return util.send(res);
         } catch (e) {
@@ -21,7 +22,7 @@ class ProjectController {
 
     static async addProject(req, res) {
         if (!req.body.name || !req.body.userId) {
-            util.setError(400, 'Please provide complete details');
+            util.setError(400, messages.GENERAL.PROVIDE_COMPLETE_DETAILS);
             return util.send(res);
         }
         const newProject = req.body;
@@ -39,13 +40,13 @@ class ProjectController {
         const alteredProject = req.body;
         const {id} = req.params;
         if (!Number(id)) {
-            util.setError(400, 'Please input a valid numeric value');
+            util.setError(400, messages.GENERAL.VALID_NUMERIC_VALUE);
             return util.send(res);
         }
         try {
             const updateProject = await ProjectService.update(id, alteredProject);
             if (!updateProject) {
-                util.setError(404, `Cannot find user with the id: ${id}`);
+                util.setError(404, messages.GENERAL.EMPTY_RESULT);
             } else {
                 util.setSuccess(200, 'Project updated', updateProject);
             }
@@ -60,7 +61,7 @@ class ProjectController {
         const {id} = req.params;
 
         if (!Number(id)) {
-            util.setError(400, 'Please input a valid numeric value1');
+            util.setError(400, messages.GENERAL.VALID_NUMERIC_VALUE);
             return util.send(res);
         }
 
@@ -68,7 +69,7 @@ class ProjectController {
             const theProject = await ProjectService.getA(id);
 
             if (!theProject) {
-                util.setError(404, `Cannot find user with the id ${id}`);
+                util.setError(404, messages.GENERAL.EMPTY_RESULT);
             } else {
                 util.setSuccess(200, 'Found Project', theProject);
             }
@@ -83,7 +84,7 @@ class ProjectController {
         const {id} = req.params;
 
         if (!Number(id)) {
-            util.setError(400, 'Please input a valid numeric value');
+            util.setError(400, messages.GENERAL.VALID_NUMERIC_VALUE);
             return util.send(res);
         }
 
@@ -106,7 +107,7 @@ class ProjectController {
         const {id} = req.params;
 
         if (!Number(id)) {
-            util.setError(400, 'Please provide a numeric value');
+            util.setError(400, messages.GENERAL.VALID_NUMERIC_VALUE);
             return util.send(res);
         }
 

@@ -4,7 +4,7 @@ import TeamService from "../services/TeamService";
 
 
 const util = new Util();
-const messages = require('../src/seeders/messages.env');
+const messages = require('../../messages.env');
 
 class UserController {
     static async getAllUsers(req, res) {
@@ -13,7 +13,7 @@ class UserController {
             if (users.length > 0) {
                 util.setSuccess(200, 'Users', users);
             } else {
-                util.setSuccess(200, 'Users not founded');
+                util.setSuccess(200, messages.USER.USER_NOT_FOUNDED);
             }
             return util.send(res);
         } catch (e) {
@@ -30,7 +30,7 @@ class UserController {
             if (users.length > 0) {
                 util.setSuccess(200, 'Users', users);
             } else {
-                util.setSuccess(200, 'Users not founded');
+                util.setSuccess(200, messages.USER.USER_NOT_FOUNDED);
             }
             return util.send(res);
         } catch (e) {
@@ -41,11 +41,11 @@ class UserController {
 
     static async addUser(req, res) {
         if (!req.body.username || !req.body.name || !req.body.password) {
-            util.setError(400, 'Please provide complete details');
+            util.setError(400, messages.GENERAL.PROVIDE_COMPLETE_DETAILS);
             return util.send(res);
         }
         if (await UserService.getAUserByEmail(req.body.username)) {
-            util.setError(400, 'User with this email already exists');
+            util.setError(400, messages.USER.USER_ALREADY_EXIST);
             return util.send(res);
         }
         const newUser = req.body;
@@ -62,7 +62,7 @@ class UserController {
 
     static async login(req, res) {
         if (!req.body.username || !req.body.password) {
-            util.setError(400, 'Please provide complete details');
+            util.setError(400, messages.GENERAL.PROVIDE_COMPLETE_DETAILS);
             return util.send(res);
         }
         let user = req.body;
@@ -97,13 +97,13 @@ class UserController {
         const alteredUser = req.body;
         const {id} = req.params;
         if (!Number(id)) {
-            util.setError(400, 'Please input a valid numeric value');
+            util.setError(400, messages.GENERAL.VALID_NUMERIC_VALUE);
             return util.send(res);
         }
         try {
             const updateUser = await UserService.update(id, alteredUser);
             if (!updateUser) {
-                util.setError(404, `Cannot find user with the id: ${id}`);
+                util.setError(404, messages.GENERAL.EMPTY_RESULT);
             } else {
                 util.setSuccess(200, 'User updated', updateUser);
             }
@@ -118,7 +118,7 @@ class UserController {
         const {id} = req.params;
 
         if (!Number(id)) {
-            util.setError(400, 'Please input a valid numeric value');
+            util.setError(400, messages.GENERAL.VALID_NUMERIC_VALUE);
             return util.send(res);
         }
 
@@ -126,7 +126,7 @@ class UserController {
             const theUser = await UserService.getUser(id);
 
             if (!theUser) {
-                util.setError(404, `Cannot find user with the id ${id}`);
+                util.setError(404, messages.GENERAL.EMPTY_RESULT);
             } else {
                 util.setSuccess(200, 'Found User', theUser);
             }
@@ -144,7 +144,7 @@ class UserController {
             const theUser = await UserService.getAUserByEmail(email);
 
             if (!theUser) {
-                util.setError(404, `Cannot find user with the email ${email}`);
+                util.setError(404, messages.GENERAL.EMPTY_RESULT);
             } else {
                 util.setSuccess(200, 'Found User', theUser);
             }
@@ -159,7 +159,7 @@ class UserController {
         const {id} = req.params;
 
         if (!Number(id)) {
-            util.setError(400, 'Please provide a numeric value');
+            util.setError(400, messages.GENERAL.VALID_NUMERIC_VALUE);
             return util.send(res);
         }
 
@@ -169,7 +169,7 @@ class UserController {
             if (userToDelete) {
                 util.setSuccess(200, 'User deleted');
             } else {
-                util.setError(404, `User with the id ${id} cannot be found`);
+                util.setError(404, messages.GENERAL.EMPTY_RESULT);
             }
             return util.send(res);
         } catch (error) {
