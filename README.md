@@ -26,10 +26,12 @@ Open `api/server/src/config/config.js` then edit it with your settings. You will
 ## First running the project
 
 This command you should run for migrate database and fill data
+
     $ npm run migrate
     
 ## Next running the project
 
     $ npm run dev 
 or
+
     $ npm run start
