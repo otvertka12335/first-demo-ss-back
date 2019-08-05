@@ -1,6 +1,6 @@
-# Project Title
+# Sequelize Server
 
-The best Server ever
+The best Server ever for first demo 
 
 ---
 ## Requirements
