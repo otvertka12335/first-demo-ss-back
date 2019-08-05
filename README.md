@@ -3,7 +3,24 @@
 The best Server ever for first demo 
 
 ---
+
+## Documentation
+
+* [Requirements](#requirements)
+* [Installation](#install)
+* [Configure app](#configure-app)
+* [First running](#first-running-the-project)
+* [Next running](#next-running-the-project)
+* [Result](#check-result)
+	- [Get All Users](#show-all-users)
+	- [Get All Projects](#show-all-projects)
+	- [Get All Teams](#show-all-teams)
+
+
 ## Requirements
+```bash
+composer require konekt/menu
+```
 
 For development, you will only need Node.js
 
@@ -14,22 +31,34 @@ For development, you will only need Node.js
     6.10.x
 
 ## Install
+```bash
+composer require konekt/menu
+```
 
     $ git clone https://gitlab.com/otvertka12335/sequelizeserver.git
     $ cd sequelizeserver
     $ npm i
 
 ## Configure app
+```bash
+composer require konekt/menu
+```
 
 Open `api/server/src/config/config.js` then edit it with your settings. You will need edit development settings.
 
 ## First running the project
+```bash
+composer require konekt/menu
+```
 
 This command you should run for migrate database and fill data
 
     $ npm run migrate
     
 ## Next running the project
+```bash
+composer require konekt/menu
+```
 
     $ npm run dev 
 or
@@ -39,10 +68,16 @@ or
     
     
 ## **Check result**
+```bash
+composer require konekt/menu
+```
 
 Open `http://localhost:8000/api/v1/` in your browser
 
-**Show List of Users**
+#### Show all users
+```bash
+composer require konekt/menu
+```
 ----
   Returns json data list of users.
 
@@ -93,7 +128,10 @@ Open `http://localhost:8000/api/v1/` in your browser
 }
 ```
 
-**Show List of Projects**
+#### Show all projects
+```bash
+composer require konekt/menu
+```
 ----
   Returns json data list of projects.
 
@@ -177,7 +215,10 @@ Open `http://localhost:8000/api/v1/` in your browser
 }
 ```
 
-**Show List of Teams**
+#### Show all teams
+```bash
+composer require konekt/menu
+```
 ----
   Returns json data list of teams. Included project and user with here role.
 
