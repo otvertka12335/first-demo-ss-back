@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon --exec babel-node ./api/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "migrate": "npx sequelize-cli db:migrate && nodemon --exec babel-node ./api/index.js"
+    "migrate": "npx sequelize-cli db:migrate && nodemon --exec babel-node ./api/index.js",
+    "start": "nodemon --exec babel-node ./api/index.js"
   },
   "keywords": [],
   "author": "",
