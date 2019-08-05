@@ -1,6 +1,8 @@
 'use strict';
 module.exports = {
     up: (queryInterface, Sequelize) => {
+        const passwordHash = require('password-hash');
+        const hash = passwordHash.generate('vkravchik');
         return queryInterface.createTable('Users', {
             id: {
                 allowNull: false,
@@ -36,21 +38,24 @@ module.exports = {
                 {
                     username: 'vkravchik@gmail.com',
                     name: 'Vadym',
-                    password: 'vkravchik',
+                    password: hash,
+                    accepted: true,
                     createdAt: new Date(),
                     updatedAt: new Date(),
                 },
                 {
                     username: 'vadim@cloud-mail.net',
                     name: 'Vadym',
-                    password: 'vkravchik',
+                    password: hash,
+                    accepted: true,
                     createdAt: new Date(),
                     updatedAt: new Date(),
                 },
                 {
                     username: 'haku@cloud-mail.net',
                     name: 'Haku',
-                    password: 'vkravchik',
+                    password: hash,
+                    accepted: true,
                     createdAt: new Date(),
                     updatedAt: new Date(),
                 }
