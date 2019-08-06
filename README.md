@@ -18,9 +18,6 @@ The best Server ever for first demo
 
 
 ## Requirements
-```bash
-composer require konekt/menu
-```
 
 For development, you will only need Node.js
 
@@ -40,16 +37,10 @@ composer require konekt/menu
     $ npm i
 
 ## Configure app
-```bash
-composer require konekt/menu
-```
 
 Open `api/server/src/config/config.js` then edit it with your settings. You will need edit development settings.
 
 ## First running the project
-```bash
-composer require konekt/menu
-```
 
 This command you should run for migrate database and fill data
 
@@ -75,9 +66,7 @@ composer require konekt/menu
 Open `http://localhost:8000/api/v1/` in your browser
 
 #### Show all users
-```bash
-composer require konekt/menu
-```
+
 ----
   Returns json data list of users.
 
@@ -129,9 +118,7 @@ composer require konekt/menu
 ```
 
 #### Show all projects
-```bash
-composer require konekt/menu
-```
+
 ----
   Returns json data list of projects.
 
@@ -216,9 +203,7 @@ composer require konekt/menu
 ```
 
 #### Show all teams
-```bash
-composer require konekt/menu
-```
+
 ----
   Returns json data list of teams. Included project and user with here role.
 
