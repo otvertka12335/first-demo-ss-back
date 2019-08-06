@@ -47,9 +47,6 @@ This command you should run for migrate database and fill data
     $ npm run migrate
     
 ## Next running the project
-```bash
-composer require konekt/menu
-```
 
     $ npm run dev 
 or
@@ -59,9 +56,6 @@ or
     
     
 ## **Check result**
-```bash
-composer require konekt/menu
-```
 
 Open `http://localhost:8000/api/v1/` in your browser
 
