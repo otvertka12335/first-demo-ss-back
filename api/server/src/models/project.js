@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
                 len: [3, 25]
             }
         },
-        description: DataTypes.STRING,
+        description: DataTypes.STRING(2555),
         userId: DataTypes.INTEGER
     }, {});
     Project.associate = function (models) {
